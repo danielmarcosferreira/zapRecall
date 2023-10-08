@@ -6,7 +6,7 @@ function App() {
   return (
     <ScreenContainer>
       <GlobalStyle />
-      <Deck />
+      <Deck cards={cardsReact} />
     </ScreenContainer>
   );
 }
@@ -15,32 +15,32 @@ export default App;
 
 const cardsReact = [
   {
-    pergunta: "O que é JSX?",
-    resposta: "Uma extensão de linguagem do JavaScript",
+    question: "O que é JSX?",
+    answer: "Uma extensão de linguagem do JavaScript"
   },
   {
-    pergunta: "O React é __",
-    resposta: "uma biblioteca JavaScript para construção de interfaces",
+    question: "O React é __",
+    answer: "uma biblioteca JavaScript para construção de interfaces"
   },
-  { pergunta: "Componentes devem iniciar com __", resposta: "letra maiúscula" },
-  { pergunta: "Podemos colocar __ dentro do JSX ", resposta: "expressões" },
+  { question: "Componentes devem iniciar com __", answer: "letra maiúscula" },
+  { question: "Podemos colocar __ dentro do JSX ", answer: "expressões" },
   {
-    pergunta: "O ReactDOM nos ajuda __ ",
-    resposta: "interagindo com a DOM para colocar componentes React na mesma",
-  },
-  {
-    pergunta: "Usamos o npm para __",
-    resposta: "gerenciar os pacotes necessários e suas dependências",
+    question: "O ReactDOM nos ajuda __ ",
+    answer: "interagindo com a DOM para colocar componentes React na mesma"
   },
   {
-    pergunta: "Usamos props para __",
-    resposta: "passar diferentes informações para componentes ",
+    question: "Usamos o npm para __",
+    answer: "gerenciar os pacotes necessários e suas dependências"
   },
   {
-    pergunta: "Usamos estado (state) para __",
-    resposta:
-      "dizer para o React quais informações quando atualizadas devem renderizar a tela novamente",
+    question: "Usamos props para __",
+    answer: "passar diferentes informações para componentes "
   },
+  {
+    question: "Usamos estado (state) para __",
+    answer:
+      "dizer para o React quais informações quando atualizadas devem renderizar a tela novamente"
+  }
 ];
 const ScreenContainer = styled.div`
   background-color: #fb6b6b;

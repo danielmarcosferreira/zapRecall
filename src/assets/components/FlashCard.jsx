@@ -1,13 +1,36 @@
 import styled from "styled-components";
 import setaPlay from "../img/seta_play.png";
+import setaVirar from "../img/seta_virar.png";
+import { useState } from "react";
 
-export default function FlashCard() {
+export default function FlashCard({
+  number,
+  openCard,
+  isOpened,
+  question,
+  answer,
+}) {
+  const [turned, setTurned] = useState(false);
+
   return (
     <>
-      <ClosedCard>
-        <ClosedCardText>Pergunta 1</ClosedCardText>
-        <img src={setaPlay} alt="seta play" />
-      </ClosedCard>
+      {isOpened ? (
+        <OpenedCard>
+          {turned ? (
+            <p>{answer}</p>
+          ) : (
+            <>
+              <p>{question}</p>
+              <img onClick={() => setTurned(true)} src={setaVirar} alt="virar" />
+            </>
+          )}
+        </OpenedCard>
+      ) : (
+        <ClosedCard onClick={openCard}>
+          <ClosedCardText>Pergunta {number}</ClosedCardText>
+          <img src={setaPlay} alt="seta play" />
+        </ClosedCard>
+      )}
     </>
   );
 }

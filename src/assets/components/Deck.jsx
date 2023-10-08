@@ -1,22 +1,41 @@
 import styled from "styled-components";
 import FlashCard from "./FlashCard";
 import Header from "./Header";
+import { useState } from "react";
 
-export default function Deck() {
+export default function Deck({ cards }) {
+    const [opened, setOpened] = useState(null)
+    const [answered, setAnswered] = useState([])
+
+    function answerQuestion (status) {
+        if (opened !== null) {
+            const newArray = [...answered, {index: opened, status: status}]
+            setAnswered(newArray)
+            setOpened(null)carta virada
+        }
+    }
+
   return (
     <>
       <Header />
-      <FlashCard />
-      <FlashCard />
-      <FlashCard />
+      {cards.map((c, i) => (
+        <FlashCard 
+            key={i} 
+            number={i + 1} 
+            openCard={() => setOpened(i)}
+            isOpened = {i === opened}
+            question = {c.question}
+            answer = {c.answer}
+        />
+      ))}
 
       <FooterContainer>
         <ContainerBotoes>
-          <ChoiceButton>Não lembrei</ChoiceButton>
-          <ChoiceButton>Quase não lembrei</ChoiceButton>
-          <ChoiceButton>Zap!</ChoiceButton>
+          <ChoiceButton onClick={() => answerQuestion("error")}>Não lembrei</ChoiceButton>
+          <ChoiceButton onClick={() => answerQuestion("almost")}>Quase não lembrei</ChoiceButton>
+          <ChoiceButton onClick={() => answerQuestion("right")}>Zap!</ChoiceButton>
         </ContainerBotoes>
-        <h1>0/4 CONCLUIDOS</h1>
+        CONCLUIDOS X/{cards.length}
       </FooterContainer>
     </>
   );
