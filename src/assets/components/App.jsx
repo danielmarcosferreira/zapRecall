@@ -1,12 +1,16 @@
 import styled from "styled-components";
 import GlobalStyle from "../css/GlobalStyle";
 import Deck from "./Deck";
+import MainScreen from "./MainScreen";
+import { useState } from "react";
 
 function App() {
+  const [deck, setDeck] = useState(false)
   return (
     <ScreenContainer>
       <GlobalStyle />
-      <Deck cards={cardsReact} />
+      {/* {deck ? <Deck cards={cardsReact}/> : <MainScreen goToDeck={() => setDeck(true)}/>} */}
+      <Deck cards={cardsReact}/> 
     </ScreenContainer>
   );
 }

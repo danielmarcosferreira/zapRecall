@@ -2,16 +2,28 @@ import styled from "styled-components";
 import FlashCard from "./FlashCard";
 import Header from "./Header";
 import { useState } from "react";
+import collors from "../css/collors"
 
 export default function Deck({ cards }) {
+    const {RED, YELLOW, GREEN} = collors
     const [opened, setOpened] = useState(null)
+    const [turned, setTurned] = useState(null)
     const [answered, setAnswered] = useState([])
 
     function answerQuestion (status) {
-        if (opened !== null) {
+        if (opened !== null && opened === turned) {
             const newArray = [...answered, {index: opened, status: status}]
             setAnswered(newArray)
-            setOpened(null)carta virada
+            setOpened(null)
+        }
+    }
+
+    function getCardStatus (i){
+        const card = answered.find((a) => a.index === i) 
+        if (card !== null && card !== undefined) {
+            return card.status
+        } else {
+            return "no status"
         }
     }
 
@@ -26,16 +38,19 @@ export default function Deck({ cards }) {
             isOpened = {i === opened}
             question = {c.question}
             answer = {c.answer}
+            status = {getCardStatus(i)}
+            turnCard = {() => setTurned(i)}
+            turned = {i === turned}
         />
       ))}
 
       <FooterContainer>
         <ContainerBotoes>
-          <ChoiceButton onClick={() => answerQuestion("error")}>Não lembrei</ChoiceButton>
-          <ChoiceButton onClick={() => answerQuestion("almost")}>Quase não lembrei</ChoiceButton>
-          <ChoiceButton onClick={() => answerQuestion("right")}>Zap!</ChoiceButton>
+          <ChoiceButton color={RED} onClick={() => answerQuestion("error")}>Não lembrei</ChoiceButton>
+          <ChoiceButton color={YELLOW} onClick={() => answerQuestion("almost")}>Quase não lembrei</ChoiceButton>
+          <ChoiceButton color={GREEN} onClick={() => answerQuestion("right")}>Zap!</ChoiceButton>
         </ContainerBotoes>
-        CONCLUIDOS X/{cards.length}
+        CONCLUIDOS {answered.length}/{cards.length}
       </FooterContainer>
     </>
   );
@@ -75,8 +90,8 @@ const ChoiceButton = styled.button`
   justify-content: center;
   text-align: center;
   color: #ffffff;
-  background: blue;
+  background: ${props => props.color};
   border-radius: 5px;
-  border: 1px solid blue;
+  border: 1px solid ${props => props.color};
   padding: 5px;
 `;

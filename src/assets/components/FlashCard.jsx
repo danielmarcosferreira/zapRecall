@@ -1,7 +1,8 @@
 import styled from "styled-components";
-import setaPlay from "../img/seta_play.png";
-import setaVirar from "../img/seta_virar.png";
 import { useState } from "react";
+import collors from "../css/collors";
+import setaVirar from "../img/seta_virar.png";
+import Icon from "./Icon";
 
 export default function FlashCard({
   number,
@@ -9,8 +10,30 @@ export default function FlashCard({
   isOpened,
   question,
   answer,
+  status,
+  turnCard,
+  turned
 }) {
-  const [turned, setTurned] = useState(false);
+  const { RED, YELLOW, GREEN, GRAY } = collors;
+
+  function open() {
+    if (status === "no status") {
+      openCard();
+    }
+  }
+
+  function chooseColor() {
+    switch (status) {
+      case "error":
+        return RED;
+      case "almost":
+        return YELLOW;
+      case "right":
+        return GREEN;
+      default:
+        return GRAY;
+    }
+  }
 
   return (
     <>
@@ -21,14 +44,20 @@ export default function FlashCard({
           ) : (
             <>
               <p>{question}</p>
-              <img onClick={() => setTurned(true)} src={setaVirar} alt="virar" />
+              <img
+                onClick={turnCard}
+                src={setaVirar}
+                alt="virar"
+              />
             </>
           )}
         </OpenedCard>
       ) : (
-        <ClosedCard onClick={openCard}>
-          <ClosedCardText>Pergunta {number}</ClosedCardText>
-          <img src={setaPlay} alt="seta play" />
+        <ClosedCard onClick={open}>
+          <ClosedCardText color={chooseColor()} status={status}>
+            Pergunta {number}
+          </ClosedCardText>
+          <Icon status={status} />
         </ClosedCard>
       )}
     </>
@@ -77,5 +106,7 @@ const ClosedCardText = styled.p`
   font-weight: 700;
   font-size: 16px;
   line-height: 19px;
-  color: #333333;
+  color: ${(props) => props.color};
+  text-decoration: ${(props) =>
+    props.status === "no status" ? "none" : "line-through"};
 `;
